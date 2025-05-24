@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import configureStore from './store';
 
 // Mock react-router-dom
+beforeAll(() => {
 jest.mock('react-router-dom', () => ({
   BrowserRouter: ({ children }) => <div data-testid="browser-router">{children}</div>,
   Routes: ({ children }) => <div data-testid="routes">{children}</div>,
@@ -15,6 +16,7 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({}),
   useLocation: () => ({ pathname: '/' }),
 }));
+});
 
 // Mock react-i18next
 jest.mock('react-i18next', () => ({
