@@ -1,22 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-jest.mock('react-router-dom', () => ({
-  Link: ({ children, to }) => <a href={to} data-testid="link">{children}</a>
-}));
-
-jest.mock('../../../hooks/useCart', () => ({
-  __esModule: true,
-  default: () => ({
-    addItem: jest.fn()
-  })
-}));
-
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(() => jest.fn())
-}));
-
 
 const ProductCard = ({ product }) => (
   <div className="product-card">
