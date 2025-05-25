@@ -1,5 +1,17 @@
 import '@testing-library/jest-dom';
 
+// Mock react-router-dom globally to avoid CI resolution issues
+jest.mock('react-router-dom', () => ({
+  BrowserRouter: ({ children }) => <div data-testid="browser-router">{children}</div>,
+  Routes: ({ children }) => <div data-testid="routes">{children}</div>,
+  Route: ({ children }) => <div data-testid="route">{children}</div>,
+  Navigate: () => <div data-testid="navigate">Navigate</div>,
+  Link: ({ children, to, ...props }) => <a href={to} data-testid="link" {...props}>{children}</a>,
+  useNavigate: () => jest.fn(),
+  useParams: () => ({}),
+  useLocation: () => ({ pathname: '/' }),
+}));
+
 // Mock axios to prevent ES module issues and include all needed methods
 jest.mock('axios', () => ({
   __esModule: true,
@@ -17,7 +29,7 @@ jest.mock('axios', () => ({
   },
 }));
 
-// Only mock react-i18next globally since it's used everywhere
+// Mock react-i18next globally since it's used everywhere
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key) => key,
@@ -25,6 +37,20 @@ jest.mock('react-i18next', () => ({
       changeLanguage: jest.fn(),
       language: 'en',
     },
+  }),
+}));
+
+// Mock custom hooks
+jest.mock('./hooks/useCart', () => ({
+  __esModule: true,
+  default: () => ({
+    addItem: jest.fn(),
+    removeItem: jest.fn(),
+    updateQuantity: jest.fn(),
+    clearCart: jest.fn(),
+    items: [],
+    totalQuantity: 0,
+    totalPrice: 0,
   }),
 }));
 

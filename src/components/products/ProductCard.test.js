@@ -1,31 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-// Mock react-router-dom before importing the component - robust approach for local and CI
-jest.mock('react-router-dom', () => {
-  try {
-    const actual = jest.requireActual('react-router-dom');
-    return {
-      ...actual,
-      Link: ({ children, to, ...props }) => <a href={to} data-testid="link" {...props}>{children}</a>,
-    };
-  } catch (error) {
-    // Fallback for CI environments where requireActual might fail
-    return {
-      Link: ({ children, to, ...props }) => <a href={to} data-testid="link" {...props}>{children}</a>,
-    };
-  }
-});
-
-// Mock the useCart hook
-jest.mock('../../hooks/useCart', () => ({
-  __esModule: true,
-  default: () => ({
-    addItem: jest.fn(),
-  }),
-}));
-
-// Import the component after mocking
 import ProductCard from './ProductCard';
 
 describe('ProductCard Component', () => {
