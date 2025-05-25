@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 describe('Basic Testing Environment', () => {
   test('renders a simple component', () => {
