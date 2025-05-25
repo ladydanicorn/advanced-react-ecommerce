@@ -1,6 +1,33 @@
 import '@testing-library/jest-dom';
 
-// Only mock react-i18next globally since it's simple and works everywhere
+// Mock react-router-dom globally with manual mock
+jest.mock('react-router-dom', () => ({
+  BrowserRouter: ({ children }) => {
+    const React = require('react');
+    return React.createElement('div', { 'data-testid': 'browser-router' }, children);
+  },
+  Routes: ({ children }) => {
+    const React = require('react');
+    return React.createElement('div', { 'data-testid': 'routes' }, children);
+  },
+  Route: ({ children }) => {
+    const React = require('react');
+    return React.createElement('div', { 'data-testid': 'route' }, children);
+  },
+  Navigate: () => {
+    const React = require('react');
+    return React.createElement('div', { 'data-testid': 'navigate' }, 'Navigate');
+  },
+  Link: ({ children, to, ...props }) => {
+    const React = require('react');
+    return React.createElement('a', { 'data-testid': 'link', href: to, ...props }, children);
+  },
+  useNavigate: () => jest.fn(),
+  useParams: () => ({}),
+  useLocation: () => ({ pathname: '/' }),
+}), { virtual: true });
+
+// Mock other dependencies
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key) => key,
@@ -11,7 +38,6 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-// Mock axios simply
 jest.mock('axios', () => ({
   __esModule: true,
   default: {
@@ -26,4 +52,24 @@ jest.mock('axios', () => ({
       delete: jest.fn(() => Promise.resolve({ data: {} })),
     })),
   },
+}));
+
+// Mock components
+jest.mock('./components/common/Navbar', () => () => {
+  const React = require('react');
+  return React.createElement('div', { 'data-testid': 'navbar-component' }, 'Navbar Component');
+});
+
+// Mock hooks
+jest.mock('./hooks/useCart', () => ({
+  __esModule: true,
+  default: () => ({
+    addItem: jest.fn(),
+    removeItem: jest.fn(),
+    updateQuantity: jest.fn(),
+    clearCart: jest.fn(),
+    items: [],
+    totalQuantity: 0,
+    totalPrice: 0,
+  }),
 }));

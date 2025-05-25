@@ -1,19 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-// Simple mocks
-jest.mock('react-router-dom', () => ({
-  Link: ({ children, to, ...props }) => <a href={to} data-testid="link" {...props}>{children}</a>,
-}));
-
-jest.mock('../../hooks/useCart', () => ({
-  __esModule: true,
-  default: () => ({
-    addItem: jest.fn(),
-  }),
-}));
-
-// Import the component after mocking
+// Import the component (mocks now handled in setupTests.js)
 import ProductCard from './ProductCard';
 
 describe('ProductCard Component', () => {
