@@ -1,13 +1,20 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-// Mock react-router-dom before importing the component
+// Mock react-router-dom before importing the component - robust approach for local and CI
 jest.mock('react-router-dom', () => {
-  const actual = jest.requireActual('react-router-dom');
-  return {
-    ...actual,
-    Link: ({ children, to }) => <a href={to} data-testid="link">{children}</a>,
-  };
+  try {
+    const actual = jest.requireActual('react-router-dom');
+    return {
+      ...actual,
+      Link: ({ children, to, ...props }) => <a href={to} data-testid="link" {...props}>{children}</a>,
+    };
+  } catch (error) {
+    // Fallback for CI environments where requireActual might fail
+    return {
+      Link: ({ children, to, ...props }) => <a href={to} data-testid="link" {...props}>{children}</a>,
+    };
+  }
 });
 
 // Mock the useCart hook
