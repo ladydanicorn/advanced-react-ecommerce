@@ -20,9 +20,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
 
-      - name: Install dependencies 
-        run: npm install --legacy-peer-deps
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies with force resolution
+        run: npm install --force
+
+      - name: List installed packages
+        run: npm list react-router-dom
 
       - name: Run tests
-        run: npm test -- --ci
+        run: npm test -- --ci --verbose
