@@ -107,6 +107,7 @@ A modern, feature-rich e-commerce web application built with React, Redux Toolki
 Vercel Deployment:
 - Deployed automatically after successful test runs
 - Continuous delivery setup for the main branch
+- Live site: https://ecommerce-app-flame-nine.vercel.app/
 
 ## Technologies Used
 
@@ -139,4 +140,3 @@ npm test
 
 ## License
 MIT License
-
