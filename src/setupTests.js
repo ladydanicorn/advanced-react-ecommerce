@@ -60,16 +60,4 @@ jest.mock('./components/common/Navbar', () => () => {
   return React.createElement('div', { 'data-testid': 'navbar-component' }, 'Navbar Component');
 });
 
-// Mock hooks
-jest.mock('./hooks/useCart', () => ({
-  __esModule: true,
-  default: () => ({
-    addItem: jest.fn(),
-    removeItem: jest.fn(),
-    updateQuantity: jest.fn(),
-    clearCart: jest.fn(),
-    items: [],
-    totalQuantity: 0,
-    totalPrice: 0,
-  }),
-}));
+// Don't mock useCart globally - let individual tests handle it
