@@ -60,4 +60,3 @@ jest.mock('./components/common/Navbar', () => () => {
   return React.createElement('div', { 'data-testid': 'navbar-component' }, 'Navbar Component');
 });
 
-// Don't mock useCart globally - let individual tests handle it

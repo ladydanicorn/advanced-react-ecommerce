@@ -4,11 +4,9 @@ import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { configureStore } from '@reduxjs/toolkit';
 
-// Import after mocking (now handled in setupTests.js)
 import App from './App';
 
 test('App renders with mocked router and Redux', () => {
-  // Create a minimal test store
   const testStore = configureStore({
     reducer: {
       test: (state = {}, action) => state,
