@@ -99,6 +99,15 @@ A modern, feature-rich e-commerce web application built with React, Redux Toolki
 - Responsive mobile-first design
 - Comprehensive error handling
 
+## CI/CD Integration
+ GitHub Actions:
+- Configured to run tests automatically on push
+- Ensures code quality and test coverage before merging
+
+Vercel Deployment:
+- Deployed automatically after successful test runs
+- Continuous delivery setup for the main branch
+
 ## Technologies Used
 
 - React
